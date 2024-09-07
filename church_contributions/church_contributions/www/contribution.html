@@ -1,0 +1,77 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<h1>{{ _("Contribution Portal") }}</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ _("Make a Contribution") }}</h5>
+                <form id="contribution-form">
+                    <div class="form-group">
+                        <label for="payment_id">{{ _("Payment ID") }}</label>
+                        <input type="text" class="form-control" id="payment_id" name="payment_id" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">{{ _("Amount") }}</label>
+                        <input type="number" class="form-control" id="amount" name="amount" step="0.01" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">{{ _("Submit Contribution") }}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ _("Recent Contributions") }}</h5>
+                <div id="recent-contributions">
+                    <!-- Recent contributions will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+frappe.ready(function() {
+    // Handle form submission
+    $('#contribution-form').on('submit', function(e) {
+        e.preventDefault();
+        frappe.call({
+            method: 'church_contributions.www.contribution.submit_contribution',
+            args: {
+                payment_id: $('#payment_id').val(),
+                amount: $('#amount').val()
+            },
+            callback: function(r) {
+                if (r.message) {
+                    frappe.msgprint(__('Contribution submitted successfully'));
+                    $('#contribution-form')[0].reset();
+                    load_recent_contributions();
+                }
+            }
+        });
+    });
+
+    // Load recent contributions
+    function load_recent_contributions() {
+        frappe.call({
+            method: 'church_contributions.www.contribution.get_recent_contributions',
+            callback: function(r) {
+                if (r.message) {
+                    var html = '';
+                    $.each(r.message, function(i, contribution) {
+                        html += '<p>' + contribution.member + ': ' + contribution.amount + ' on ' + contribution.payment_date + '</p>';
+                    });
+                    $('#recent-contributions').html(html);
+                }
+            }
+        });
+    }
+
+    load_recent_contributions();
+});
+</script>
+{% endblock %}
