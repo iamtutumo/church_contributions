@@ -8,10 +8,10 @@ from church_contributions import __version__ as version
 
 setup(
     name="church_contributions",
-    version=version,
+    version='0.0.1',
     description="Church Contribution System for Anglican Church",
-    author="Your Name",
-    author_email="your.email@example.com",
+    author="Tutu Moses",
+    author_email="etu.moses@gmail.com",
     packages=find_packages(),
     zip_safe=False,
     include_package_data=True,
