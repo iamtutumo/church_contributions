@@ -8,7 +8,7 @@ from church_contributions import __version__ as version
 
 setup(
     name="church_contributions",
-    version='0.0.1',
+    version=version,
     description="Church Contribution System for Anglican Church",
     author="Tutu Moses",
     author_email="etu.moses@gmail.com",
