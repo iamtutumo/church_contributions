@@ -1,10 +1,10 @@
 app_name = "church_contributions"
 app_title = "Church Contributions"
-app_publisher = "Your Name"
+app_publisher = "Tutu Moses"
 app_description = "Church Contribution System for Anglican Church"
 app_icon = "octicon octicon-file-directory"
 app_color = "grey"
-app_email = "your.email@example.com"
+app_email = "etu.moses@gmail.com"
 app_license = "MIT"
 
 # Includes in <head>
